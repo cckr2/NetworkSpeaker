@@ -13,38 +13,30 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 public class SoundClient extends Thread{
-	public static final String serverIP = "192.168.0.3";
+	public static final String serverIP = "127.0.0.1";
 	public static final int port = 6000;
-	public static final int DEFAULT_BUFFER_SIZE = 1000;
+	public static final int DEFAULT_BUFFER_SIZE = 2000;
 	byte Buffer[] = new byte[DEFAULT_BUFFER_SIZE];
 	
-	private SourceDataLine dataLine;
+	private SourceDataLine dataLine=null;
 	private Socket socket ;
 	private InputStream is;
 	
-	public SoundClient(SourceDataLine line){
-		dataLine = line;
-	}
-
-	public void startCapture(){
-		dataLine.start();
-	    super.start();
-	}
-
-	public void stopCapture(){
-		dataLine.drain();
-		dataLine.close();
+	public SoundClient(){
+	    AudioFormat audioFormat = getAudioFormat();
+	    
+	    DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class,audioFormat);
 	    try {
-			is.close();
-			socket.close();
-		} catch (IOException e) {
+	    	dataLine = (SourceDataLine)AudioSystem.getLine(dataLineInfo);
+	    	dataLine.open(audioFormat);
+	    } catch (LineUnavailableException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-	}
 
-	public void run(){
-		try {
+	    dataLine.start();
+
+	    try {
 			socket = new Socket(serverIP, port);
 			if(!socket.isConnected()){
 		    	System.out.println("Socket Connect Error.");
@@ -68,47 +60,27 @@ public class SoundClient extends Thread{
 		}
 	}
 
-	public static void main(String[] args){
-		AudioInputStream audioInputStream;
-		SourceDataLine sourceDataLine = null;
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	    
-	    byte audioData[] = byteArrayOutputStream.toByteArray();
-	    InputStream byteArrayInputStream = new ByteArrayInputStream(audioData);
-	    AudioFormat audioFormat = getAudioFormat();
-	    audioInputStream = new AudioInputStream(byteArrayInputStream,audioFormat,audioData.length/audioFormat.getFrameSize());
-	    DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class,audioFormat);
+	public void finish(){
+		dataLine.drain();
+		dataLine.close();
 	    try {
-			sourceDataLine = (SourceDataLine)AudioSystem.getLine(dataLineInfo);
-			sourceDataLine.open(audioFormat);
-	    } catch (LineUnavailableException e1) {
+			is.close();
+			socket.close();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-	    
+	}
 
-        //Data read and send;
-        //SoundClient is Tread;
-        SoundClient recorder = new SoundClient(sourceDataLine);
-        recorder.startCapture();
-        
-        System.out.println("Starting now...");
-        System.out.println("Please press to stop the recording.");
-        
-        try{
-            System.in.read();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-	
-        recorder.stopCapture();
-        System.out.println("stopped.");
+
+	public static void main(String[] args){
+		SoundClient recorder = new SoundClient();
     }
+	
 	private static AudioFormat getAudioFormat(){
-	    float sampleRate = 8000.0F;	    //8000,11025,16000,22050,44100
+	    float sampleRate = 44100.0F;	    //8000,11025,16000,22050,44100
 	    int sampleSizeInBits = 16;	    //8,16
-	    int channels = 1;	    //1,2
+	    int channels = 2;	    //1,2
 	    boolean signed = true;	    //true,false
 	    boolean bigEndian = false;	    //true,false
 	    return new AudioFormat(sampleRate,sampleSizeInBits,channels,signed,bigEndian);
