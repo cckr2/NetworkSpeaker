@@ -54,7 +54,6 @@ public static int MAX_LENGTH = 512;
 				Scene scene = null;
 				Group root = new Group();
 				try {
-	
 					scene = new Scene(root);
 				    PlayerController player = new PlayerController(root);
 				    
