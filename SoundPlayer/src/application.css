@@ -1,8 +1,8 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .ButtonSet {
-    -fx-background-color: #000000;
+    -fx-background-color: #FFFFFF;
 }
 
 .Base{
-	-fx-background-color: #F6F6F6;
+	-fx-background-color: #EBF7FF;
 }

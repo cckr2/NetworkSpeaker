@@ -33,34 +33,33 @@ public class SoundPlayer {
 	public static TargetDataLine target_dataLine;
 	public static DataLine.Info dataLine_info;
 	public static int remain_Height;
+	public static DrawGraph graph;
 	static int height, width;
 	
 	public static void main(String[] args) {		
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int screanHeight = gd.getDisplayMode().getHeight();
 		remain_Height = screanHeight-1080;
-		height = 592;
-		width = 586;
+		height = 550;
+		width = 575;
 		if(remain_Height>0)
 			height = (remain_Height)/4 + height; 
 		 
 		mixer_Info = AudioSystem.getMixerInfo();
-		//MixSelector mixSelector = new MixSelector();
-		//mixSelector.view_MixList();
-		
-		
-		System.out.println(height);
+		MixSelector mixSelector = new MixSelector();
+
 		SwingUtilities.invokeLater(new Runnable() { 
 			@Override 
 			public void run() { 
 				JFrame frame = new JFrame();
-				frame.setBounds(0, 0, 680, height);
+				frame.setBounds(0, 0, width, height);
 				
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setLayout(new BorderLayout());
-				frame.getContentPane().setBackground(new java.awt.Color(246,246,246));
-				 
-				DrawGraph graph = new DrawGraph();
+				//frame.getContentPane().setBackground(new java.awt.Color(246,246,246));
+				frame.getContentPane().setBackground(new java.awt.Color(235,247,255));
+				graph = new DrawGraph();
+				graph.init();
 				frame.add(graph,BorderLayout.CENTER);
 								
 				JFXPanel panel = new JFXPanel();
@@ -70,7 +69,7 @@ public class SoundPlayer {
 				Group root = new Group();
 				try {
 					scene = new Scene(root);
-				
+					
 				    PlayerController player = new PlayerController(root);
 				    
 				} catch(Exception e) {
@@ -81,13 +80,14 @@ public class SoundPlayer {
 				frame.add(panel,BorderLayout.PAGE_END);
 				
 				frame.setVisible(true);			
-				graph.starter();
+				
 			} 
 		}); 
+		mixSelector.view_MixList();
 	} 
 	
 	public static AudioFormat getAudioFormat() {
-        float sampleRate = 8800.0F;
+        float sampleRate = 96000.0F;
         int sampleSizeInBits = 16;
         int channels = 2;
         boolean singed = true;

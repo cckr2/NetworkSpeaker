@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="465.0" prefWidth="560.0" styleClass="Base" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="420.0" prefWidth="560.0" styleClass="Base" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <VBox fx:id="background" alignment="TOP_LEFT" prefHeight="465.0" prefWidth="550.0" styleClass="ButtonSet" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox fx:id="background" alignment="TOP_LEFT" prefHeight="420.0" prefWidth="550.0" styleClass="Base" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <AnchorPane prefHeight="30.0" prefWidth="540.0" />
         <AnchorPane fx:id="ButtonArea" prefHeight="25.0" prefWidth="550.0" styleClass="Base">
@@ -21,12 +21,12 @@
             <Label layoutX="299.0" layoutY="5.0" prefWidth="220.0" text="Label" />
           </children>
         </AnchorPane>
-        <AnchorPane prefHeight="10.0" prefWidth="540.0" />
-        <AnchorPane fx:id="listView" prefHeight="375.0" prefWidth="548.0">
+        <AnchorPane prefHeight="20.0" prefWidth="540.0" />
+        <AnchorPane fx:id="listView" prefHeight="360.0" prefWidth="540.0">
           <children>
-            <ScrollPane hbarPolicy="ALWAYS" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="365.0" prefWidth="548.0" vbarPolicy="AS_NEEDED">
+            <ScrollPane hbarPolicy="ALWAYS" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="360.0" prefWidth="550" vbarPolicy="AS_NEEDED">
               <content>
-                <ListView fx:id="speakerList" prefHeight="359.0" prefWidth="542.0" />
+                <ListView fx:id="speakerList" prefHeight="360.0" prefWidth="540.0" />
               </content>
             </ScrollPane>
           </children>
