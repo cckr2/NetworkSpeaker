@@ -121,13 +121,17 @@ public class Get_Sound_Info {
         timer.cancel();
     }
     
-    AudioFormat getAudioFormat(){
-        float sampleRate = 44100.0F;       //8000,11025,16000,22050,44100
-        int sampleSizeInBits = 16;       //8,16
-        int channels = 2;       //1,2
-        boolean signed = true;       //true,false
-        boolean bigEndian = false;       //true,false
-        return new AudioFormat(sampleRate,sampleSizeInBits,channels,signed,bigEndian);
+    public AudioFormat getAudioFormat() {
+ 
+        float sampleRate = 96000.0F;
+        int sampleSizeInBits = 16;
+        int channels = 2;
+        boolean singed = true;
+        boolean bigEndian = false;
+ 
+        return new AudioFormat(sampleRate, sampleSizeInBits, channels, singed,
+                bigEndian);
+ 
     }
     
 }

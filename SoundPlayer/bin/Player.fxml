@@ -2,33 +2,31 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="466.0" prefWidth="573.999755859375" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.AnchorPane" id="AnchorPane" prefHeight="465.0" prefWidth="560.0" styleClass="Base" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <VBox alignment="TOP_LEFT" prefHeight="456.0" prefWidth="551.999755859375" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="0.0">
+    <VBox fx:id="background" alignment="TOP_LEFT" prefHeight="465.0" prefWidth="550.0" styleClass="ButtonSet" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <AnchorPane prefHeight="93.0" prefWidth="552.0" />
-        <AnchorPane prefHeight="60.0" prefWidth="552.0">
+        <AnchorPane prefHeight="30.0" prefWidth="540.0" />
+        <AnchorPane fx:id="ButtonArea" prefHeight="25.0" prefWidth="550.0" styleClass="Base">
           <children>
-            <HBox alignment="CENTER" layoutX="390.0" layoutY="4.0" prefHeight="21.0" prefWidth="167.0" spacing="10.0">
-              <children>
-                <Label text="VOL" />
-                <Slider id="sliderVolume" prefWidth="121.0" />
-              </children>
-            </HBox>
-            <Button fx:id="mixButton" layoutX="109.0" layoutY="0.0" mnemonicParsing="false" prefWidth="80.0" text="MIX" />
-            <Button fx:id="playButton" layoutX="14.0" layoutY="0.0" mnemonicParsing="false"  prefWidth="80.0" text="PLAY" />
+            <Button fx:id="playButton" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="PLAY" />
+            <Button fx:id="finishButton" layoutX="109.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="FINISH" />
+            <Button fx:id="mixButton" layoutX="203.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="MIX" />
+            <Label layoutX="299.0" layoutY="5.0" prefWidth="220.0" text="Label" />
           </children>
         </AnchorPane>
-        <AnchorPane prefHeight="386.0" prefWidth="562.0">
+        <AnchorPane prefHeight="10.0" prefWidth="540.0" />
+        <AnchorPane fx:id="listView" prefHeight="375.0" prefWidth="548.0">
           <children>
-            <ScrollPane hbarPolicy="ALWAYS" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="359.0" prefWidth="552.0" vbarPolicy="AS_NEEDED">
+            <ScrollPane hbarPolicy="ALWAYS" layoutX="0.0" layoutY="0.0" pannable="true" prefHeight="365.0" prefWidth="548.0" vbarPolicy="AS_NEEDED">
               <content>
-                <ListView id="listPlayList" fx:id="speakerListView" prefHeight="359.0" prefWidth="537.0" />
+                <ListView fx:id="speakerList" prefHeight="359.0" prefWidth="542.0" />
               </content>
             </ScrollPane>
           </children>
@@ -36,4 +34,7 @@
       </children>
     </VBox>
   </children>
+  <padding>
+    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+  </padding>
 </fx:root>
