@@ -47,7 +47,8 @@ public class SoundPlayer {
 		 
 		mixer_Info = AudioSystem.getMixerInfo();
 		MixSelector mixSelector = new MixSelector();
-
+		
+		System.out.println(height);
 		SwingUtilities.invokeLater(new Runnable() { 
 			@Override 
 			public void run() { 
@@ -56,10 +57,9 @@ public class SoundPlayer {
 				
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setLayout(new BorderLayout());
-				//frame.getContentPane().setBackground(new java.awt.Color(246,246,246));
-				frame.getContentPane().setBackground(new java.awt.Color(235,247,255));
-				graph = new DrawGraph();
-				graph.init();
+				frame.getContentPane().setBackground(new java.awt.Color(246,246,246));
+				 
+				DrawGraph graph = new DrawGraph();
 				frame.add(graph,BorderLayout.CENTER);
 								
 				JFXPanel panel = new JFXPanel();
@@ -69,9 +69,7 @@ public class SoundPlayer {
 				Group root = new Group();
 				try {
 					scene = new Scene(root);
-					
 				    PlayerController player = new PlayerController(root);
-				    
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -80,7 +78,7 @@ public class SoundPlayer {
 				frame.add(panel,BorderLayout.PAGE_END);
 				
 				frame.setVisible(true);			
-				
+				graph.starter();
 			} 
 		}); 
 		mixSelector.view_MixList();

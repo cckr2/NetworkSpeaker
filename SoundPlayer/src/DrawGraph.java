@@ -12,59 +12,45 @@ import javax.swing.border.EtchedBorder;
  
  
 public class DrawGraph extends Canvas implements Runnable{
-	int width = 550;
+	int width = 548;
 	int height = 100;
 	int length = 510;
-	int margin = 5;
+	int margin = 8;
 	
     private static final long serialVersionUID = 1L;
  
     boolean rend = false;
- 
     Thread thread;
     
     int[] baseDate = new int[length];
     int[] temp = new int[length];
-    
     boolean[] standardData = new boolean[length];
     
     BufferStrategy buffer_strategy;
     Graphics2D graphics;
     GradientPaint gradient_paint;
     
-    public DrawGraph(){         	
-    	gradient_paint = new GradientPaint(10,0,Color.red,325,100,Color.blue,true);
+    public DrawGraph(){      
+        gradient_paint = new GradientPaint(10,0,Color.red,325,100,Color.blue,true);
         thread = new Thread(this);
         for (int i = 0; i < length; i++) {
             temp[i] += (20+i);
             baseDate[i] = 50;
             standardData[i] = false;
-        }    
-        
+        }        
     }
     
-    public void init(){      
+    public void starter(){      
         rend = true;
         thread.start();
     }
     
-    public void start(){      
-        rend = true;
-        thread.run();
-    }
-    
-    public void parse(){      
-        rend = false;
-        thread.stop();
-    }
-    
-
-    
     @Override
     public void run(){
-    	new Timer().schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             public void run() {
                 for (int i = 0; i < length; i++) {
+ 
                     if (!standardData[i]) {
                         if (baseDate[i] > MixSelector.amp[i]) {
                             baseDate[i]--;
@@ -73,12 +59,14 @@ public class DrawGraph extends Canvas implements Runnable{
                         }
                     }
                     if (baseDate[i] == MixSelector.amp[i])
-                    	standardData[i] = true;
-                }           
+                        standardData[i] = true;
+ 
+                }
+                
+ 
             }
         }, 0, 3);
-    	
-    	new Timer().schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             public void run() {
                 for (int i = 0; i < length; i++) {
                     if (standardData[i]) {
@@ -101,6 +89,7 @@ public class DrawGraph extends Canvas implements Runnable{
     
     public void render(){
         if (this.getBufferStrategy() == null) {
+ 
             this.createBufferStrategy(3);
             return;
  
@@ -116,7 +105,6 @@ public class DrawGraph extends Canvas implements Runnable{
        
         this.setBounds(margin,margin, width, height);
         this.setBackground(new Color(234,242,250));
-        //this.setBackground(Color.WHITE);
         buffer_strategy.show();
     }
  

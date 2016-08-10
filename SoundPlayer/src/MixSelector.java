@@ -14,15 +14,13 @@ import javax.swing.JDialog;
  
  
 public class MixSelector {   
-	static int length = 512;
-	public static int[] amp = new int[length];
-	Boolean read = false;
-	byte[] data = new byte[44100];
-	
-    Timer timer;
-    
 	JDialog mixList;
 	Mixer.Info[] mixer_info;
+	static int length = 512;
+	public static int[] amp = new int[length];
+	byte[] data = new byte[44100];
+	Boolean read;
+	Timer timer;
 	
     public MixSelector(){
     	mixer_info = SoundPlayer.mixer_Info;
@@ -40,8 +38,8 @@ public class MixSelector {
                     for(int i = 0; i < buttons.length; i++){
                         if(ar.getSource() == buttons[i]){
                         	open_Mixer(mixer_info[i]);
-                        	
                         	System.out.println("¼±ÅÃµÊ");
+                        	start_read();
                         }
                     }
                 }
@@ -53,51 +51,51 @@ public class MixSelector {
     public void view_MixList(){
     	mixList.setVisible(true);
     }
+    
     void open_Mixer(Mixer.Info info){    
     	AudioFormat audioFormat = getAudioFormat();
         SoundPlayer.mixer = AudioSystem.getMixer(info);
         try{
-        	if(SoundPlayer.target_dataLine!=null){
-        		SoundPlayer.graph.parse();
-	        	SoundPlayer.target_dataLine.stop();
-	        	SoundPlayer.target_dataLine.close();
-	        	}
         	SoundPlayer.dataLine_info = new DataLine.Info(TargetDataLine.class, audioFormat);
         	SoundPlayer.target_dataLine = (TargetDataLine) SoundPlayer.mixer.getLine(SoundPlayer.dataLine_info);
         	SoundPlayer.target_dataLine.open(audioFormat);
         	SoundPlayer.target_dataLine.start();
-        	SoundPlayer.graph.start();
-        	
+        	if(timer!=null){
+        		read = false;
+        		timer.cancel();
+        	}
         }catch(Exception e){
             e.printStackTrace();
         }    
     }
     
     public void start_read(){
-    	read=true;
-    	timer = new Timer();
-    	timer.schedule(new TimerTask(){
+        read = true;
+        timer = new Timer();
+        timer.schedule(new TimerTask(){
             @Override
             public void run(){
-            	while(read){
-	                SoundPlayer.target_dataLine.read(data, 0, data.length);
-	                int max = 0, min = 0;
-	                int count = 0;
-	                for (int i = 0; i < data.length; i++) {    
-	                    if ((i + 1) % (data.length/512) == 0) {
-	                        max = Integer.max(max, data[i]);
-	                        min = Integer.min(min, data[i]);
-	                        amp[count] = ((max+min))+50;
-	                        max = 0;
-	                        min = 0;
-	                        count++;
-	                    }
-	                }
+                while (read) {
+                	SoundPlayer.target_dataLine.read(data, 0, data.length);
+                    
+                    int max = 0, min = 0;
+                    int count = 0;
+                    for (int i = 0; i < data.length; i++) {      
+                        if ((i + 1) % (data.length/length) == 0) {
+                            max = Integer.max(max, data[i]);
+                            min = Integer.min(min, data[i]);                     
+                            amp[count] = ((max+min))+50;
+                            max = 0;
+                            min = 0;
+                            count++;
+                        }
+                    }
+                    
                 }
             }
         }, 0, 1);
+        
     }
-    
     
     AudioFormat getAudioFormat(){
         float sampleRate = 44100.0F;       //8000,11025,16000,22050,44100
