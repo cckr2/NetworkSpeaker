@@ -12,9 +12,8 @@ import javax.swing.border.EtchedBorder;
  
  
 public class DrawGraph extends Canvas implements Runnable{
-	int width = 548;
+	
 	int height = 100;
-	int length = 510;
 	int margin = 8;
 	
     private static final long serialVersionUID = 1L;
@@ -22,9 +21,9 @@ public class DrawGraph extends Canvas implements Runnable{
     boolean rend = false;
     Thread thread;
     
-    int[] baseDate = new int[length];
-    int[] temp = new int[length];
-    boolean[] standardData = new boolean[length];
+    int[] baseDate = new int[SoundPlayer.length];
+    int[] temp = new int[SoundPlayer.length];
+    boolean[] standardData = new boolean[SoundPlayer.length];
     
     BufferStrategy buffer_strategy;
     Graphics2D graphics;
@@ -33,7 +32,7 @@ public class DrawGraph extends Canvas implements Runnable{
     public DrawGraph(){      
         gradient_paint = new GradientPaint(10,0,Color.red,325,100,Color.blue,true);
         thread = new Thread(this);
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < SoundPlayer.length; i++) {
             temp[i] += (20+i);
             baseDate[i] = 50;
             standardData[i] = false;
@@ -49,11 +48,11 @@ public class DrawGraph extends Canvas implements Runnable{
     public void run(){
         new Timer().schedule(new TimerTask() {
             public void run() {
-                for (int i = 0; i < length; i++) {
+                for (int i = 0; i < SoundPlayer.length; i++) {
  
                     if (!standardData[i]) {
                         if (baseDate[i] > MixSelector.amp[i]) {
-                            baseDate[i]--;
+                        	baseDate[i]--;
                         } else {
                             baseDate[i]++;
                         }
@@ -68,7 +67,7 @@ public class DrawGraph extends Canvas implements Runnable{
         }, 0, 3);
         new Timer().schedule(new TimerTask() {
             public void run() {
-                for (int i = 0; i < length; i++) {
+                for (int i = 0; i < SoundPlayer.length; i++) {
                     if (standardData[i]) {
                         if (baseDate[i] > 50) {
                             baseDate[i]--;
@@ -98,12 +97,12 @@ public class DrawGraph extends Canvas implements Runnable{
         buffer_strategy = this.getBufferStrategy();
         
         graphics = (Graphics2D)buffer_strategy.getDrawGraphics();
-        graphics.clearRect(0,0, width, height);
+        graphics.clearRect(0,0, SoundPlayer.width-4, height);
         graphics.setColor(new Color(0f, 0f, 0f, 0f));
         graphics.setPaint(gradient_paint);
-        graphics.drawPolyline(temp, baseDate, length);
+        graphics.drawPolyline(temp, baseDate, SoundPlayer.length);
        
-        this.setBounds(margin,margin, width, height);
+        this.setBounds(margin,margin,  SoundPlayer.width-4, height);
         this.setBackground(new Color(234,242,250));
         buffer_strategy.show();
     }

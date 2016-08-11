@@ -35,7 +35,7 @@ public class SoundPlayer {
 	public static int remain_Height;
 	public static DrawGraph graph;
 	public static JFrame frame;
-	static int height, width;
+	public static int height, width,length;
 	
 	public static void main(String[] args) {		
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -43,13 +43,13 @@ public class SoundPlayer {
 		remain_Height = screanHeight-1080;
 		height = 550;
 		width = 575;
+		length = 512;
 		if(remain_Height>0)
 			height = (remain_Height)/4 + height; 
 		 
 		mixer_Info = AudioSystem.getMixerInfo();
 		MixSelector mixSelector = new MixSelector();
 		
-		System.out.println(height);
 		SwingUtilities.invokeLater(new Runnable() { 
 			@Override 
 			public void run() { 

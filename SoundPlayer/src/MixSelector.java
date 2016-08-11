@@ -16,8 +16,8 @@ import javax.swing.JDialog;
 public class MixSelector {   
 	JDialog mixList;
 	Mixer.Info[] mixer_info;
-	static int length = 512;
-	public static int[] amp = new int[length];
+	
+	public static int[] amp = new int[SoundPlayer.length];
 	byte[] data = new byte[44100];
 	Boolean read;
 	Timer timer;
@@ -40,12 +40,14 @@ public class MixSelector {
                         	open_Mixer(mixer_info[i]);
                         	System.out.println("º±≈√µ ");
                         	start_read();
-                        	SoundPlayer.frame.setBounds( SoundPlayer.frame.getX(), SoundPlayer.frame.getY(), SoundPlayer.frame.getWidth(), SoundPlayer.frame.getHeight());
+                        	
+                        	
                         }
                     }
                 }
             });
         }
+    	
     	mixList.pack();
     }
     
@@ -82,20 +84,23 @@ public class MixSelector {
                     int max = 0, min = 0;
                     int count = 0;
                     for (int i = 0; i < data.length; i++) {      
-                        if ((i + 1) % (data.length/length) == 0) {
+                        if ((i + 1) % (data.length/SoundPlayer.length) == 0) {
                             max = Integer.max(max, data[i]);
-                            min = Integer.min(min, data[i]);                     
+                            min = Integer.min(min, data[i]);
+
                             amp[count] = ((max+min))+50;
+                           
                             max = 0;
                             min = 0;
                             count++;
+                            
                         }
                     }
                     
                 }
             }
         }, 0, 1);
-        
+        SoundPlayer.length = SoundPlayer.length-10;
     }
     
     AudioFormat getAudioFormat(){
