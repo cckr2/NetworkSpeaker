@@ -34,6 +34,7 @@ public class SoundPlayer {
 	public static DataLine.Info dataLine_info;
 	public static int remain_Height;
 	public static DrawGraph graph;
+	public static JFrame frame;
 	static int height, width;
 	
 	public static void main(String[] args) {		
@@ -52,7 +53,7 @@ public class SoundPlayer {
 		SwingUtilities.invokeLater(new Runnable() { 
 			@Override 
 			public void run() { 
-				JFrame frame = new JFrame();
+				frame = new JFrame();
 				frame.setBounds(0, 0, width, height);
 				
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -40,6 +40,7 @@ public class MixSelector {
                         	open_Mixer(mixer_info[i]);
                         	System.out.println("º±≈√µ ");
                         	start_read();
+                        	SoundPlayer.frame.setBounds( SoundPlayer.frame.getX(), SoundPlayer.frame.getY(), SoundPlayer.frame.getWidth(), SoundPlayer.frame.getHeight());
                         }
                     }
                 }

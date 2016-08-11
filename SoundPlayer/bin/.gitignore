@@ -1,11 +1,14 @@
 /DrawGraph$1.class
+/DrawGraph$2.class
 /DrawGraph.class
 /MixSelector$1.class
+/MixSelector$2.class
 /MixSelector.class
 /Player.fxml
 /PlayerController$1.class
 /PlayerController$2.class
 /PlayerController.class
+/SoundPlayer$1.class
 /SoundPlayer.class
 /Speaker$1.class
 /Speaker$2.class
@@ -13,7 +16,3 @@
 /Speaker$4.class
 /Speaker.class
 /application.css
-/SoundPlayer$1.class
-/DrawGraph$2.class
-/DrawGraph$3.class
-/MixSelector$2.class
