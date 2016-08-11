@@ -37,6 +37,7 @@ public class DrawGraph extends Canvas implements Runnable{
             baseDate[i] = 50;
             standardData[i] = false;
         }        
+        SoundPlayer.length = SoundPlayer.length-10;
     }
     
     public void starter(){      
