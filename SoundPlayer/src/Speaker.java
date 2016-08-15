@@ -6,6 +6,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 public class Speaker {
@@ -60,7 +62,14 @@ public class Speaker {
         soundUpBtn.setId("soundupbtn");
         soundDownBtn.setId("sounddownbtn");
         
-        
+        speakerID.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent t) {
+                if (t.getCode() == KeyCode.ENTER) {
+                	//send ip
+                    System.out.println(speakerID.getText());
+                }
+            }
+        });
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 if(running) {
