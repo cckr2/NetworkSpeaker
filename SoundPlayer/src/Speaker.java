@@ -1,13 +1,18 @@
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 public class Speaker {
@@ -17,26 +22,27 @@ public class Speaker {
 	public Button disconnectBtn;
 	public Button soundUpBtn;
 	public Button soundDownBtn;
-	boolean running = true;;
+	boolean running = true;
 	static ListView listView;
 	Speaker(ListView listView){
-		System.out.println("in add function");
     	this.listView = listView;
     	this.listView.setFixedCellSize(30);
     	contentsBox = new HBox();
-    	contentsBox.setSpacing(20);
+    	contentsBox.setSpacing(15);
         
-    	speakerID = new TextArea("ip ... ");
+    	speakerID = new TextArea("ip address ");
     	playBtn = new Button("");
         disconnectBtn = new Button("");
         soundUpBtn = new Button("");
         soundDownBtn = new Button("");
         
+        HBox idbox = new HBox();
+        
         int size = 28;
         speakerID.setId("iplabel");
         speakerID.setEditable(true);
-        speakerID.setMinSize(330, size);
-        speakerID.setMaxSize(330, size);
+        speakerID.setMinSize(240, size);
+        speakerID.setMaxSize(240, size);
         playBtn.setMinSize(size, size);
         playBtn.setMaxSize(size, size);
         disconnectBtn.setMinSize(size, size);
@@ -62,13 +68,20 @@ public class Speaker {
         soundUpBtn.setId("soundupbtn");
         soundDownBtn.setId("sounddownbtn");
         
-        speakerID.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent t) {
-                if (t.getCode() == KeyCode.ENTER) {
-                	//send ip
-                    System.out.println(speakerID.getText());
-                }
-            }
+        speakerID.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        	@Override
+        	public void handle(MouseEvent e){
+        		TextInputDialog dialog = new TextInputDialog("Dialog");
+        		dialog.setTitle("Edit ID");
+        		dialog.setHeaderText("Change ID");
+        		dialog.setContentText("Please enter your ID : ");
+
+        		// Traditional way to get the response value.
+        		Optional<String> result = dialog.showAndWait();
+        		if (result.isPresent()){
+        		    speakerID.setText(result.get());
+        		}
+        	}
         });
         playBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -104,7 +117,9 @@ public class Speaker {
             	System.out.println("sound_down " );
             }
         });
-        contentsBox.getChildren().addAll(speakerID, playBtn, disconnectBtn, soundDownBtn, soundUpBtn);
+        idbox.getChildren().addAll(speakerID);
+        idbox.setPadding(new Insets(0,100,0,0));
+        contentsBox.getChildren().addAll(idbox, playBtn, disconnectBtn, soundDownBtn, soundUpBtn);
         
         listView.getItems().add(contentsBox);
  
