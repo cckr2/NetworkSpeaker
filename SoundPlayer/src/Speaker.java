@@ -71,7 +71,7 @@ public class Speaker {
         speakerID.setOnMouseClicked(new EventHandler<MouseEvent>(){
         	@Override
         	public void handle(MouseEvent e){
-        		TextInputDialog dialog = new TextInputDialog("Dialog");
+        		TextInputDialog dialog = new TextInputDialog(speakerID.getText());
         		dialog.setTitle("Edit ID");
         		dialog.setHeaderText("Change ID");
         		dialog.setContentText("Please enter your ID : ");
