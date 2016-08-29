@@ -36,7 +36,7 @@ public class SoundPlayer {
 	public static DrawGraph graph;
 	public static JFrame frame;
 	public static int height, width,length;
-	static PlayerController player;
+	
 	public static void main(String[] args) {		
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int screanHeight = gd.getDisplayMode().getHeight();
@@ -68,10 +68,9 @@ public class SoundPlayer {
 				Scene scene = null;
 				
 				Group root = new Group();
-				
 				try {
 					scene = new Scene(root);
-				    player = new PlayerController(root);
+				    PlayerController player = new PlayerController(root);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -81,12 +80,10 @@ public class SoundPlayer {
 				
 				frame.setVisible(true);			
 				graph.starter();
+				
 			} 
 		}); 
 		mixSelector.view_MixList();
-
-		SoundServer server = new SoundServer(player);
-		
 	} 
 	
 	public static AudioFormat getAudioFormat() {

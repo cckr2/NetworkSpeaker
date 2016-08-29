@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,14 +58,11 @@ public class PlayerController extends AnchorPane implements Initializable {
         mixButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
         	@Override
         	public void handle(MouseEvent envent){
-        		
+        		new Speaker(speakerList);
         	}
         });
     }
     
-    public void add_speaker(Socket socket){
-    	new Speaker(speakerList,socket);
-    }
    
  
 }

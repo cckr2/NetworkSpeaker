@@ -34,9 +34,7 @@ public class SoundServer extends Thread{
          while(true) {
         	 Socket socket = server.accept();  
         	 InetSocketAddress isaSpeaker = (InetSocketAddress) socket.getRemoteSocketAddress();
-      
         	 System.out.println("A Speaker("+isaSpeaker.getAddress().getHostAddress()+") is connected. (Port: " +isaSpeaker.getPort() + ")");
-
         	 SoundPlayer.player.add_speaker(socket);
 
          }          

@@ -59,16 +59,14 @@ public class MixSelector {
     	AudioFormat audioFormat = getAudioFormat();
         SoundPlayer.mixer = AudioSystem.getMixer(info);
         try{
-        	if(timer!=null){
-        		SoundPlayer.target_dataLine.stop();
-        		SoundPlayer.target_dataLine.close();
-        		read = false;
-        		timer.cancel();
-        	}
         	SoundPlayer.dataLine_info = new DataLine.Info(TargetDataLine.class, audioFormat);
         	SoundPlayer.target_dataLine = (TargetDataLine) SoundPlayer.mixer.getLine(SoundPlayer.dataLine_info);
         	SoundPlayer.target_dataLine.open(audioFormat);
         	SoundPlayer.target_dataLine.start();
+        	if(timer!=null){
+        		read = false;
+        		timer.cancel();
+        	}
         }catch(Exception e){
             e.printStackTrace();
         }    
@@ -102,7 +100,7 @@ public class MixSelector {
                 }
             }
         }, 0, 1);
-        
+        SoundPlayer.length = SoundPlayer.length-10;
     }
     
     AudioFormat getAudioFormat(){
