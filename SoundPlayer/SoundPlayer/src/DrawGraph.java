@@ -12,13 +12,10 @@ import javax.swing.border.EtchedBorder;
  
  
 public class DrawGraph extends Canvas implements Runnable{
+	final long serialVersionUID = 1L;
+	final int height = 100;
+	final int margin = 8;
 	
-	int height = 100;
-	int margin = 8;
-	
-    private static final long serialVersionUID = 1L;
- 
-    boolean rend = false;
     Thread thread;
     
     int[] baseDate = new int[SoundPlayer.length];
@@ -28,8 +25,10 @@ public class DrawGraph extends Canvas implements Runnable{
     BufferStrategy buffer_strategy;
     Graphics2D graphics;
     GradientPaint gradient_paint;
-    
-    public DrawGraph(){      
+    MixSelector mixSelector;
+ 
+    public DrawGraph(MixSelector mixSelector){
+    	this.mixSelector = mixSelector; 
         gradient_paint = new GradientPaint(10,0,Color.red,325,100,Color.blue,true);
         thread = new Thread(this);
         for (int i = 0; i < SoundPlayer.length; i++) {
@@ -40,7 +39,6 @@ public class DrawGraph extends Canvas implements Runnable{
     }
     
     public void starter(){      
-        rend = true;
         thread.start();
     }
     
@@ -49,7 +47,6 @@ public class DrawGraph extends Canvas implements Runnable{
         new Timer().schedule(new TimerTask() {
             public void run() {
                 for (int i = 0; i < SoundPlayer.length; i++) {
- 
                     if (!standardData[i]) {
                         if (baseDate[i] > MixSelector.amp[i]) {
                         	baseDate[i]--;
@@ -59,12 +56,10 @@ public class DrawGraph extends Canvas implements Runnable{
                     }
                     if (baseDate[i] == MixSelector.amp[i])
                         standardData[i] = true;
- 
                 }
-                
- 
             }
         }, 0, 3);
+        
         new Timer().schedule(new TimerTask() {
             public void run() {
                 for (int i = 0; i < SoundPlayer.length; i++) {
@@ -81,17 +76,15 @@ public class DrawGraph extends Canvas implements Runnable{
             }
         }, 0, 3);
         
-        while (rend) {
-            render();
-        }
+        while(true){
+        	render();
+	    }
     }
     
     public void render(){
         if (this.getBufferStrategy() == null) {
- 
             this.createBufferStrategy(3);
             return;
- 
         }
  
         buffer_strategy = this.getBufferStrategy();
@@ -102,8 +95,9 @@ public class DrawGraph extends Canvas implements Runnable{
         graphics.setPaint(gradient_paint);
         graphics.drawPolyline(temp, baseDate, SoundPlayer.length);
        
-        this.setBounds(margin,margin,  SoundPlayer.width-4, height);
-        this.setBackground(new Color(234,242,250));
+        this.setBounds(margin,margin,  SoundPlayer.width-38, height);
+        if(PlayerController.runner) this.setBackground(new Color(234,242,250));
+        else this.setBackground(new Color(255,204,204));
         buffer_strategy.show();
     }
  

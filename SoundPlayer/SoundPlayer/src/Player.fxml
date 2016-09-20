@@ -15,10 +15,10 @@
         <AnchorPane prefHeight="30.0" prefWidth="540.0" />
         <AnchorPane fx:id="ButtonArea" prefHeight="25.0" prefWidth="550.0" styleClass="Base">
           <children>
-            <Button fx:id="playButton" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="PLAY" />
-            <Button fx:id="finishButton" layoutX="109.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="FINISH" />
-            <Button fx:id="mixButton" layoutX="203.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="MIX" />
-            <Label layoutX="299.0" layoutY="5.0" prefWidth="220.0" text="Label" />
+            <Button fx:id="playButton" layoutX="14.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="Pause" />
+            <Button fx:id="clearButton" layoutX="109.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="Stop" />
+            <Button fx:id="mixButton" layoutX="203.0" layoutY="1.0" mnemonicParsing="false" prefWidth="80.0" text="Mix" />
+            <Label fx:id="txtLabel" layoutX="299.0" layoutY="5.0" prefWidth="220.0" text="Label" />
           </children>
         </AnchorPane>
         <AnchorPane prefHeight="20.0" prefWidth="540.0" />

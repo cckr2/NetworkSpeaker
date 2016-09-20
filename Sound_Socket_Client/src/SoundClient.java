@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -13,7 +14,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 public class SoundClient extends Thread{
-	public static final String serverIP = "127.0.0.1";
+	public static final String serverIP = "192.168.1.7";
 	public static final int port = 6000;
 	public static final int DEFAULT_BUFFER_SIZE = 2000;
 	byte Buffer[] = new byte[DEFAULT_BUFFER_SIZE];
@@ -46,10 +47,15 @@ public class SoundClient extends Thread{
 			InputStream is = socket.getInputStream();
   		    int readBytes;
   		    System.out.println("Socket is Connect.");
-		    while (true) {
-		    	readBytes = is.read(Buffer);
-		    	dataLine.write(Buffer,0,readBytes);
+  		    try{
+			    while (true) {
+			    	readBytes = is.read(Buffer);
+			    	dataLine.write(Buffer,0,readBytes);
+			    }
+		    } catch(SocketException e){
+		    	finish();
 		    }
+  		    
 		        
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -58,6 +64,7 @@ public class SoundClient extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
 	}
 
 	public void finish(){

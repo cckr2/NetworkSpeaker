@@ -28,15 +28,12 @@ import javafx.scene.Scene;
  import javafx.scene.layout.GridPane; 
 
 public class SoundPlayer { 
-	public static Mixer mixer;
-	public static Mixer.Info[] mixer_Info;
-	public static TargetDataLine target_dataLine;
-	public static DataLine.Info dataLine_info;
+	public static MixSelector mixSelector;
 	public static int remain_Height;
 	public static DrawGraph graph;
 	public static JFrame frame;
 	public static int height, width,length;
-	
+	public static PlayerController player;
 	public static void main(String[] args) {		
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int screanHeight = gd.getDisplayMode().getHeight();
@@ -46,21 +43,19 @@ public class SoundPlayer {
 		length = 512;
 		if(remain_Height>0)
 			height = (remain_Height)/4 + height; 
-		 
-		mixer_Info = AudioSystem.getMixerInfo();
-		MixSelector mixSelector = new MixSelector();
-		
+
+		mixSelector = new MixSelector();
 		SwingUtilities.invokeLater(new Runnable() { 
 			@Override 
 			public void run() { 
 				frame = new JFrame();
-				frame.setBounds(0, 0, width, height);
+				frame.setBounds(400, 0, width, height);
 				
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setLayout(new BorderLayout());
 				frame.getContentPane().setBackground(new java.awt.Color(246,246,246));
 				 
-				DrawGraph graph = new DrawGraph();
+				DrawGraph graph = new DrawGraph(mixSelector);
 				frame.add(graph,BorderLayout.CENTER);
 								
 				JFXPanel panel = new JFXPanel();
@@ -70,7 +65,8 @@ public class SoundPlayer {
 				Group root = new Group();
 				try {
 					scene = new Scene(root);
-				    PlayerController player = new PlayerController(root);
+				    player = new PlayerController(root,mixSelector);
+					SoundServer soundserver = new SoundServer(player);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -85,14 +81,4 @@ public class SoundPlayer {
 		}); 
 		mixSelector.view_MixList();
 	} 
-	
-	public static AudioFormat getAudioFormat() {
-        float sampleRate = 96000.0F;
-        int sampleSizeInBits = 16;
-        int channels = 2;
-        boolean singed = true;
-        boolean bigEndian = false;
-        return new AudioFormat(sampleRate, sampleSizeInBits, channels, singed,
-                bigEndian);
-    }
 } 

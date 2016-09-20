@@ -19,12 +19,12 @@ public class SoundServer extends Thread{
    
    public static ServerSocket server;
    public static final int SpeakerMax = 10;
-   private Speaker speaker[] = new Speaker[SpeakerMax];
+
+	private TargetDataLine dataLine;
    PlayerController player;
    public SoundServer(PlayerController player){
 	   this.player = player;
 	   super.start();
-	   
    }
    public void run(){
       try {
@@ -35,8 +35,7 @@ public class SoundServer extends Thread{
         	 Socket socket = server.accept();  
         	 InetSocketAddress isaSpeaker = (InetSocketAddress) socket.getRemoteSocketAddress();
         	 System.out.println("A Speaker("+isaSpeaker.getAddress().getHostAddress()+") is connected. (Port: " +isaSpeaker.getPort() + ")");
-        	 SoundPlayer.player.add_speaker(socket);
-
+        	 player.speaker_add(socket, isaSpeaker.getAddress().getHostAddress());
          }          
       
       } catch (UnknownHostException e) {
@@ -47,18 +46,18 @@ public class SoundServer extends Thread{
 	        e.printStackTrace();
 	  }
    	}
-	public void all_restart(){
-		for(int i=0;i<10;i++){
-			if(speaker[i]!=null)
-				speaker[i].restart();
-		}
-	}
-	public void all_pause(){
-		for(int i=0;i<10;i++){
-			if(speaker[i]!=null)
-				speaker[i].pause();
-		}
-	}
+//	public void all_restart(){
+//		for(int i=0;i<10;i++){
+//			if(speaker[i]!=null)
+//				speaker[i].restart();
+//		}
+//	}
+//	public void all_pause(){
+//		for(int i=0;i<10;i++){
+//			if(speaker[i]!=null)
+//				speaker[i].pause();
+//		}
+//	}
 	   
 	   
 
