@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -34,7 +35,7 @@ public class MixSelector {
 	static int length = SoundPlayer.length;
 	public static int[] amp = new int[length];
 	
-	Timer timer;
+	Timer timer=null;
 	int readBytes;
 	
     public MixSelector(){
@@ -73,11 +74,12 @@ public class MixSelector {
         mixer = AudioSystem.getMixer(info);
         try{
         	if(timer!=null){
-        		timer.cancel();
         		target_dataLine.stop();
             	target_dataLine.close();
+        		timer.cancel();
+        	}else{
+        		dataLine_info = new DataLine.Info(TargetDataLine.class, audioFormat);
         	}
-        	dataLine_info = new DataLine.Info(TargetDataLine.class, audioFormat);
         	target_dataLine = (TargetDataLine) mixer.getLine(dataLine_info);
         	target_dataLine.open(audioFormat);
         	target_dataLine.start();
@@ -96,7 +98,12 @@ public class MixSelector {
                 	readBytes = target_dataLine.read(Buffer, 0, DEFAULT_BUFFER_SIZE);
                 	for(OutputStream item: osList){
                     	try {
-							item.write(Buffer, 0, readBytes);
+                    		try{
+                    			item.write(Buffer, 0, readBytes);
+							}catch(SocketException e2){
+								//여기에 사라진 소켓은 죽이는거 넣어함 
+								//즉 OutputStram을 Speaker로 변경해야함 ㅋㅋㅋ
+							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

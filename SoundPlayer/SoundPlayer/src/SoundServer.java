@@ -45,20 +45,6 @@ public class SoundServer extends Thread{
 	     // TODO Auto-generated catch block
 	        e.printStackTrace();
 	  }
-   	}
-//	public void all_restart(){
-//		for(int i=0;i<10;i++){
-//			if(speaker[i]!=null)
-//				speaker[i].restart();
-//		}
-//	}
-//	public void all_pause(){
-//		for(int i=0;i<10;i++){
-//			if(speaker[i]!=null)
-//				speaker[i].pause();
-//		}
-//	}
-	   
-	   
+   	}  
 
 }
