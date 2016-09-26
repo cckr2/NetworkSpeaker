@@ -12,9 +12,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.Mixer;
+
+
 
 public class SoundClient extends Thread{
-	public static final String serverIP = "192.168.1.7";
+	public static final String serverIP = "192.168.0.4";
 	public static final int port = 6000;
 	public static final int DEFAULT_BUFFER_SIZE = 2000;
 	byte Buffer[] = new byte[DEFAULT_BUFFER_SIZE];
@@ -25,17 +28,25 @@ public class SoundClient extends Thread{
 	
 	public SoundClient(){
 	    AudioFormat audioFormat = getAudioFormat();
+            Mixer.Info[] mixerinfo = AudioSystem.getMixerInfo();
+            
+            for(int i = 0; i < mixerinfo.length; i++){
+                System.out.println(i + " : " + mixerinfo[i].getName());
+            }
+
 	    
 	    DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class,audioFormat);
+            Mixer mixer = AudioSystem.getMixer(mixerinfo[1]); 
+
+
 	    try {
-	    	dataLine = (SourceDataLine)AudioSystem.getLine(dataLineInfo);
+	    	dataLine = (SourceDataLine)mixer.getLine(dataLineInfo);
 	    	dataLine.open(audioFormat);
+                dataLine.start();
 	    } catch (LineUnavailableException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-	    dataLine.start();
 
 	    try {
 			socket = new Socket(serverIP, port);
@@ -66,7 +77,6 @@ public class SoundClient extends Thread{
 		}
 	    
 	}
-
 	public void finish(){
 		dataLine.drain();
 		dataLine.close();
